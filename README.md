@@ -1,5 +1,7 @@
 # myblog
 
+此仓库仅仅只是前端代码
+
 ## Project setup
 ```
 npm install
