@@ -33,7 +33,7 @@
           <div class="second-time">
             <span>
               <i class="iconfont iconzishu" />
-              字数统计: {{ wordNum | num }}
+              字数统计: {{ wordNum }}
             </span>
           </div>
         </div>
@@ -54,7 +54,29 @@
               <i class="iconfont iconhanbao" style="font-size:16.8px" />
               <span style="margin-left:10px">目录</span>
             </div>
-            <div id="toc"  />
+            <div id="toc" class="toc" />
+          </el-card>
+          <el-card style="margin-top: 10px">
+            <i class="iconfont icongengxinshijian" style="font-size:16.8px" />
+            <span style="margin-left:10px">相关文章</span>
+              <div class="articleRecommmend-List">
+                <div class="articleRecommend-item"
+                  v-for="(item,index) in article.articleRecommendList"
+                     :key="index"
+                >
+                  <router-link :to="'/Article/' + item.id" class="context-photo">
+                    <img :src="item.photo" />
+                  </router-link>
+                  <div class="context">
+                    <div class="context-title">
+                      <router-link :to="'/Article/' + item.id">
+                        {{ item.title }}
+                      </router-link>
+                    </div>
+                    <div class="context-time">{{ formatter(item.createTime) }}</div>
+                  </div>
+                </div>
+              </div>
           </el-card>
         </div>
       </el-col>
@@ -198,7 +220,7 @@ export default {
             }
           });
         });
-
+        console.log("结果",res)
       })
     },
     //清除html标签
@@ -254,6 +276,12 @@ export default {
   line-height: 1.9;
   display: inline-block;
 }
+ol{
+  padding-left: 0px !important;
+}
+a:hover{
+  text-decoration: none !important;
+}
 .banner:before{
   content: "";
   position: absolute;
@@ -292,6 +320,58 @@ a:hover{
 .right-title i {
   font-weight: bold;
 }
+.context {
+  flex: 1;
+  padding-left: 10px;
+  word-break: break-all;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+.context-title a {
+  transition: all 0.2s;
+  font-size: 95%;
+}
+.context-title a:hover {
+  color: #2ba1d1;
+}
+.context-time {
+  color: #858585;
+  font-size: 85%;
+  line-height: 2;
+}
+.context-photo {
+  width: 58.8px;
+  height: 58.8px;
+  overflow: hidden;
+}
+.articleRecommmend-List{
+  margin-top: 10px;
+}
+.articleRecommend-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+}
+.articleRecommend-item:first-child {
+  padding-top: 0;
+}
+.articleRecommend-item:last-child {
+  padding-bottom: 0;
+}
+.articleRecommend-item:not(:last-child) {
+  border-bottom: 1px dashed #f5f5f5;
+}
+.articleRecommend-item img {
+  width: 100%;
+  height: 100%;
+  transition: all 0.6s;
+  object-fit: cover;
+}
+.articleRecommend-item img:hover {
+  transform: scale(1.1);
+}
+
 
 >>> pre {
   border: 1px solid red;
